@@ -22,27 +22,45 @@
                	new Toast({content: 'An example message.', duration: 2000});
         	}
         	
-        	
-        	
-            function reminderNotification()
+            function hungryNotification()
             {
                 var now = new Date().getTime(),
                 _60_seconds_from_now = new Date(now + 60*1000);
+                _6_seconds_from_now = new Date(now + 6*1000);
                 
                 window.plugin.notification.local.add({
                         id:         1, // is converted to a string
                         title:      'Break Over',
                         message:    'Now you\'ve had some food, get back to work!',
                         repeat:     'never',
-                        date:       _60_seconds_from_now,
+                        date:       _6_seconds_from_now,
                         foreground: 'foreground',
                         background: 'background'
                     });
             }
         	
+			function notHungryNotification()
+			{
+				new Toast({content: 'Good, keep on keeping on.', duration: 2000});
+				
+				var now = new Date().getTime();
+                _60_seconds_from_now = new Date(now + 6*1000);
+                _6_seconds_from_now = new Date(now + 6*1000);
+                
+                window.plugin.notification.local.add({
+                        id:         1, // is converted to a string
+                        title:      'Hungry yet?',
+                        message:    'It was an hour ago since we checked... Hungry yet?',
+                        repeat:     'never',
+                        date:       _6_seconds_from_now,
+                        foreground: 'createDialog()',
+                        background: 'createDialog()'
+                    });
+			}
+
         	function dialogDismissed(buttonIndex) {
-            	if(buttonIndex==1) new Toast({content: "Go and take a break and eat.", duration: 3000});
-            	else if(buttonIndex==2) reminderNotification();
+            	if(buttonIndex==1) hungryNotification();
+            	else if(buttonIndex==2) notHungryNotification();
             }
         	
         	function createDialog() {
@@ -54,7 +72,8 @@
             		'Hunger check!',            // title
             		['Yes', 'No']                  // buttons
         		);
-        	}   
+        	}
+        	
         	function createNotification() {
         		
         		//
