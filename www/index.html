@@ -24,16 +24,26 @@
         	
         	
         	
-        	function createDialog() {
-        		//phonegap supports native dialog boxes.
-        		//here's a simple example
-        		navigator.notification.confirm(
-            		'Are you hungry?',  // message
-            		dialogDismissed,         // callback
-            		'Hunger check!',            // title
-            		['Yes', 'No']                  // buttons
-        		);
-        	}
+            function reminderNotification()
+            {
+                var now = new Date().getTime(),
+                _60_seconds_from_now = new Date(now + 60*1000);
+                
+                window.plugin.notification.local.add({
+                        id:         1, // is converted to a string
+                        title:      'Break Over',
+                        message:    'Now you\'ve had some food, get back to work!',
+                        repeat:     'never',
+                        date:       _60_seconds_from_now,
+                        foreground: 'foreground',
+                        background: 'background'
+                    });
+            }
+        	
+        	function dialogDismissed(buttonIndex) {
+            	if(buttonIndex==1) new Toast({content: "Go and take a break and eat.", duration: 3000});
+            	else if(buttonIndex==2) reminderNotification();
+            }
         	
         	
         	function dialogDismissed(buttonIndex) {
